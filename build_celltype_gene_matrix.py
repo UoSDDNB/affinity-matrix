@@ -6,7 +6,7 @@ import pandas
 adata = scanpy.read('data/normal.h5ad')
 
 # extract the counts matrix 
-# buld a new matrix that is celltype x genes
+# build a new matrix that is celltype x genes
 # find the celltype information in the metadata
 
 # for every celltype, find the average expression of each gene 
@@ -16,7 +16,7 @@ adata = scanpy.read('data/normal.h5ad')
 # get the unique celltypes
 celltypes = adata.obs['cell_type'].unique()
 # create an empty matrix
-celltype_matrix = pandas.DataFrame()
+celltype_matrix = pandas.DataFrame(index=adata.var_names, columns=celltypes)
 for celltype in celltypes:
     # subset the data to only include the cells of the current celltype
     cdata = adata[adata.obs['cell_type'] == celltype]
@@ -25,10 +25,18 @@ for celltype in celltypes:
     # add the average to the matrix
     celltype_matrix[celltype] = avg
 
-#
+# print the shape of the matrix
 print(celltype_matrix.shape)  
 
+# save the matrix as a csv file
+celltype_matrix.to_csv("data/celltype_matrix.csv", index = True)
+
 # TO DO: perhaps in later scripts
+
+# binarize the matrix in python !? what a pain... 
+# maybe extract the matrix, convert to R and use the binarize function in R.
+
+
 # convert the counts matrix from cells x genes to cell_type x genes
 
 # convert the cell type counts matrix to cell type by function matrix
