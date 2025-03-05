@@ -3,6 +3,8 @@
 # convert this to work with a matrix
 # then I will:
 # convert it to work in python!?
+#
+# If I am using fix_cutoff = TRUE, then a python equivilent will be VERY simple.
 
 
 # test the function
