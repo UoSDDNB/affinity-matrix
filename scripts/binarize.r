@@ -1,4 +1,4 @@
-#binarize celltype_matrix 
+#binarize celltype_gene_matrix 
 # first I will:
 # convert this to work with a matrix
 # then I will:
@@ -9,17 +9,17 @@
 
 # test the function
 library(GeneSwitches)
-#load "data/celltype_matrix.csv"
-celltype_matrix <- read.csv("data/celltype_matrix.csv", row.names = 1)
+#load "data/celltype_gene_matrix.csv"
+celltype_gene_matrix <- read.csv("data/celltype_gene_matrix.csv", row.names = 1)
 
 # plot a histogram of the gene expression
-hist(as.numeric(as.matrix(celltype_matrix)), 
+hist(as.numeric(as.matrix(celltype_gene_matrix)), 
      breaks = 100, 
      main = "Histogram of gene expression", 
      xlab = "Gene expression")
 
 # zoom in and set limits
-hist(as.numeric(as.matrix(celltype_matrix)), 
+hist(as.numeric(as.matrix(celltype_gene_matrix)), 
      breaks = 1000000, 
      main = "Histogram of gene expression", 
      xlab = "Gene expression",
@@ -31,13 +31,13 @@ abline(v = 0.00002, col = "red")
 # binarize the data
 library(parallel)
 library(mixtools)
-binary_matrix <- binarize_exp(celltype_matrix,
+binary_matrix <- binarize_exp(celltype_gene_matrix,
                               fix_cutoff = TRUE,
                               binarize_cutoff = 0.00002,
                               ncores = 6)
 
 # save the binary matrix as a csv
-write.csv(binary_matrix, "data/binary_celltype_matrix.csv")
+write.csv(binary_matrix, "data/binary_celltype_gene_matrix.csv")
 
 #' @title Binarize gene expression
 #'
