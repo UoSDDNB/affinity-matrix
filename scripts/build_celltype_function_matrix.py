@@ -1,10 +1,9 @@
 # Build a matrix with celltype by function
 # load the necessary libraries
-import scanpy
 import pandas
 
 # load the celltype_gene matrix
-celltype_gene_matrix = pandas.read_csv("/scratch/mtn1n22/affinity-matrix/output/celltype_gene_matrix.csv", index_col = 0)
+celltype_gene_matrix = pandas.read_csv("/scratch/mtn1n22/affinity-matrix/output/celltype_gene_matrix_binarized.csv", index_col = 0)
 
 # head the gene names
 print(celltype_gene_matrix.head())
@@ -18,8 +17,6 @@ with open("/scratch/mtn1n22/affinity-matrix/data/c5.go.v2024.1.Hs.json") as f:
 print(len(gene_function))  
 #there are 10454 terms.
 
-# print the summery/structure of gene_function
-print(type(gene_function))
 
 ## create a new matrix that is celltype x function
 # the columns will be the celltypes from the celltype_gene_matrix
@@ -51,3 +48,4 @@ for i, (function, function_data) in enumerate(gene_function.items(), start=1):
 
 # Save the matrix
 celltype_function_matrix.to_csv("/scratch/mtn1n22/affinity-matrix/output/celltype_function_matrix.csv", index=True)
+
