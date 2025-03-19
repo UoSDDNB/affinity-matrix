@@ -3,6 +3,7 @@ import os
 import scanpy as sc
 import pandas as pd
 import json
+import matplotlib.pyplot as plt
 
 ### SET DIRECTORY
 os.chdir('/home/mtn1n22/affinity-matrix/')
@@ -20,6 +21,7 @@ ndata = adata[adata.obs['disease'] == 'normal']
 
 
 ### PLOT THE GENE EXPRESSION
+# run the plot_expression.py script
 
 
 ### BINARIZE THE CELLTYPE GENE EXPRESSION MATRIX
