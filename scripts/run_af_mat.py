@@ -54,8 +54,7 @@ ct_fun_mat.to_csv('output/celltype_function_matrix.csv')
 
 ### PCA
 # run pca on the celltype-function matrix
-sc.pp.pca(ct_fun_mat)
-# 
+
 
 
 ### UMAP
