@@ -6,13 +6,12 @@ import umap
 from sklearn.decomposition import PCA
 from adjustText import adjust_text
 
-def plot_pca(celltype_function_matrix, output_dir, label_points=True, num_pcs=20):
+def plot_pca(celltype_function_matrix, label_points=True, num_pcs=20):
     """
     Perform PCA on celltype_function_matrix and plot PCA projection & elbow plot.
 
     Args:
         celltype_function_matrix (pd.DataFrame): Input matrix with genes as rows and cell types as columns.
-        output_dir (str): Directory to save the plots.
         label_points (bool): Whether to label each point with the column name.
         num_pcs (int): Number of principal components to retain for UMAP.
 
@@ -35,7 +34,7 @@ def plot_pca(celltype_function_matrix, output_dir, label_points=True, num_pcs=20
     plt.title("PCA Projection of celltype_function_matrix")
     plt.xlabel("PCA 1")
     plt.ylabel("PCA 2")
-    plt.savefig(f"{output_dir}/PCA_function.png")
+    plt.savefig(f"output/figures/PCA_function.png")
     plt.clf()
 
     # Elbow plot
@@ -46,20 +45,19 @@ def plot_pca(celltype_function_matrix, output_dir, label_points=True, num_pcs=20
     plt.title("Choosing Number of PCs for UMAP")
     plt.axhline(y=0.9, color='r', linestyle='--')  # 90% variance threshold
     plt.axhline(y=0.95, color='g', linestyle='--')  # 95% variance threshold
-    plt.savefig(f"{output_dir}/ELBOW_function.png")
+    plt.savefig(f"output/figures/ELBOW_function.png")
     plt.clf()
 
     return celltype_pca[:, :num_pcs]  # Return first num_pcs dimensions for UMAP
 
 
-def plot_umap(pca_reduced, celltype_function_matrix, output_dir, label_points=True):
+def plot_umap(pca_reduced, celltype_function_matrix, label_points=True):
     """
     Perform UMAP on PCA-reduced data and plot the UMAP projection.
 
     Args:
         pca_reduced (np.ndarray): PCA-transformed data (first few principal components).
         celltype_function_matrix (pd.DataFrame): Input matrix (used for labeling).
-        output_dir (str): Directory to save the plots.
         label_points (bool): Whether to label each point with the column name.
     """
     reducer = umap.UMAP(n_neighbors=15, min_dist=0.1, metric='euclidean', random_state=42)
@@ -77,16 +75,8 @@ def plot_umap(pca_reduced, celltype_function_matrix, output_dir, label_points=Tr
     plt.title("UMAP Projection of celltype_function_matrix")
     plt.xlabel("UMAP 1")
     plt.ylabel("UMAP 2")
-    plt.savefig(f"{output_dir}/UMAP_function.png")
+    plt.savefig(f"output/figures/UMAP_function.png")
     plt.clf()
 
 
-# Example usage:
-celltype_function_matrix = pd.read_csv("/scratch/mtn1n22/affinity-matrix/output/celltype_function_matrix.csv", index_col=0)
-output_dir = "/scratch/mtn1n22/affinity-matrix/output/figures"
 
-# Run PCA
-pca_reduced = plot_pca(celltype_function_matrix, output_dir, label_points=True, num_pcs=20)
-
-# Run UMAP
-plot_umap(pca_reduced, celltype_function_matrix, output_dir, label_points=True)
