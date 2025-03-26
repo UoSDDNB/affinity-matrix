@@ -1,4 +1,4 @@
 data/*
 output/*
 scratch.py
-scripts/_pycache_/*
+scripts/_pycache_
