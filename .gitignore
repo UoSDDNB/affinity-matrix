@@ -1,4 +1,5 @@
 data/*
 output/*
 scratch.py
-scripts/_pycache_
+# ignore pycache files in the scripts directory
+scripts/__pycache__/*
