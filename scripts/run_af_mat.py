@@ -24,7 +24,7 @@ adata = sc.read_h5ad('data/human_cell_landscape.h5ad')
 # must be run on a login node.
 ct_gene_mat = build_ct_gene_mat(adata)
 # Save the celltype-gene matrix to a CSV file
-#ct_gene_mat.to_csv('output/celltype_gene_matrix.csv')
+# ct_gene_mat.to_csv('output/celltype_gene_matrix.csv')
 # load the celltype-gene matrix as a pd dataframe
 # ct_gene_mat2 = pd.read_csv('output/celltype_gene_matrix.csv', index_col=0)
 # #check that ct_gene_mat and ct_gene_mat2 are the same
@@ -42,8 +42,6 @@ plt_gene_exp_hist(ct_gene_mat,
                   ylim=8000,
                   bins=1000)
 
-# print the maximum gene expression value
-print(ct_gene_mat.values.max())
 # condsider not binarizing, instead normailizing the data?
 
 ### BINARIZE THE CELLTYPE GENE EXPRESSION MATRIX
@@ -64,10 +62,14 @@ ct_fun_mat = build_ct_fun_mat(ct_gene_mat_bin, gene_functions)
 # # load the celltype-function matrix as a pd dataframe
 # ct_fun_mat = pd.read_csv('output/celltype_function_matrix.csv', index_col=0)
 
+## remove functions with low variance
+# # remove functions with variance less than 2* the mean
+ct_fun_mat = ct_fun_mat[ct_fun_mat.var(axis=1) >= 2 * ct_fun_mat.var(axis=1).mean()]
+
 ### PCA
 # run pca on the celltype-function matrix
 celltype_pca = plot_pca(ct_fun_mat)
 
 ### UMAP
-plot_umap(celltype_pca, ct_fun_mat)
+plot_umap(celltype_pca, ct_fun_mat, num_pcs=20)
 
