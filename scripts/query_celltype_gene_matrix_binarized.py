@@ -39,4 +39,17 @@ def query_celltype_gene_matrix_binarized(ct_gene_bin):
     plt.savefig('/scratch/mtn1n22/affinity-matrix/output/figures/query/celltype_gene_matrix_binarized/num_genes_expressed_by_cell_type.png')
     plt.clf()
 
+    # plot a histogram of the variance of each gene (row)
+    ct_gene_bin.var(axis=1).sort_values(ascending=True).plot(kind='hist', bins=100, color='purple', alpha=0.7)
+    plt.title('Variance of each gene (Binarized)')
+    plt.xlabel('Variance')
+    plt.ylabel('Frequency')
+    plt.tight_layout()
+    # draw a line at the mean
+    mean = ct_gene_bin.var(axis=1).mean()
+    plt.axvline(mean, color='red', linestyle='dashed', linewidth=1)
+    plt.savefig('/scratch/mtn1n22/affinity-matrix/output/figures/query/celltype_gene_matrix_binarized/variance_of_each_gene.png')
+    plt.clf()
+
+
     

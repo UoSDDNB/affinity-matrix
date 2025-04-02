@@ -40,6 +40,18 @@ def query_celltype_gene_matrix(ct_gene):
     plt.savefig('/scratch/mtn1n22/affinity-matrix/output/figures/query/celltype_gene_matrix/sum_exp_per_cell_type.png')
     plt.clf()
 
+    # plot a histogram of the variance of each gene (row)
+    ct_gene.var(axis=1).sort_values(ascending=True).plot(kind='hist', bins=100, color='purple', alpha=0.7)
+    plt.title('Variance of each gene')
+    plt.xlabel('Variance')
+    plt.ylabel('Frequency')
+    plt.tight_layout()
+    # draw a line at the mean
+    mean = ct_gene.var(axis=1).mean()
+    plt.axvline(mean, color='red', linestyle='dashed', linewidth=1)
+    plt.savefig('/scratch/mtn1n22/affinity-matrix/output/figures/query/celltype_gene_matrix/variance_of_each_gene.png')
+    plt.clf()
+
 # # load binarized celltype-gene matrix
 # ct_gene_mat_bin = pd.read_csv('output/celltype_gene_matrix_binarized.csv', index_col=0)
 # num_ct_expressing_gene = ct_gene_mat_bin.sum(axis=1)
