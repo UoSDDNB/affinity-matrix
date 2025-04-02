@@ -12,7 +12,7 @@ def query_celltype_function_matrix(ct_fun):
         None
     """
 
-    # plot a histogram of the variance of each row
+    # plot a histogram of the variance of each function (row)
     ct_fun.var(axis=1).sort_values(ascending=True).plot(kind='hist', bins=100, color='purple', alpha=0.7)
     plt.title('Variance of each function')
     plt.xlabel('Variance')
