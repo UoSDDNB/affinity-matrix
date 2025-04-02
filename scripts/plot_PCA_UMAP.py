@@ -19,17 +19,26 @@ def plot_pca(celltype_function_matrix, label_points=True):
     """
     # Define groupings and colors
     groupings = {
-        "Immune cells": ["macrophage", "monocyte", "T cell", "B cell", "dendritic cell",
-                         "neutrophil", "mast cell", "inflammatory cell", "myeloid cell",
-                         "professional antigen presenting cell"],
-        "Barrier and structural cells": ["epithelial cell", "fibroblast", "mesothelial cell",
-                                         "smooth muscle cell", "endothelial cell", "chondrocyte",
-                                         "stromal cell", "basal cell", "mesenchymal stem cell"],
-        "Secretory cells": ["acinar cell", "goblet cell", "endocrine cell", "plasma cell",
-                            "peptic cell", "epithelial cell of exocrine pancreas",
-                            "thyroid follicular cell", "Sertoli cell"],
-        "Contractile cells": ["ventricular cardiac muscle cell", "cell of skeletal muscle",
-                              "smooth muscle cell"],
+        "Immune cells": ["macrophage", "monocyte", "T cell", "B cell",
+                         "dendritic cell", "neutrophil", "mast cell",
+                         "inflammatory cell", "myeloid cell", "plasma cell",
+                         "professional antigen presenting cell", 
+                         "alternatively activated macrophage"],
+        "Barrier and structural cells": ["epithelial cell",
+                                         "fibroblast",
+                                         "mesothelial cell", 
+                                         "smooth muscle cell",
+                                         "endothelial cell",
+                                         "chondrocyte",
+                                         "stromal cell",
+                                         "basal cell",
+                                         "mesenchymal stem cell"],
+        "Secretory cells": ["acinar cell", "goblet cell", "endocrine cell",
+                            "peptic cell", "Sertoli cell",
+                            "epithelial cell of exocrine pancreas",
+                            "thyroid follicular cell"],
+        "Contractile cells": ["ventricular cardiac muscle cell", 
+                              "cell of skeletal muscle", "smooth muscle cell"],
         "Neural cells": ["neuron", "astrocyte", "oligodendrocyte"]
     }
     colors = {
@@ -48,7 +57,7 @@ def plot_pca(celltype_function_matrix, label_points=True):
     # Assign each column (cell type) to a group, defaulting to "Other"
     celltype_groups = [celltype_to_group.get(celltype, "Other")
                        for celltype in celltype_function_matrix.columns]
-    celltype_colors = [colors[group] for group in celltype_groups]
+    #celltype_colors = [colors[group] for group in celltype_groups]
 
 
     # Perform PCA
@@ -105,17 +114,26 @@ def plot_umap(pca, celltype_function_matrix, num_pcs, label_points=True):
     """
     # Define groupings and colors
     groupings = {
-        "Immune cells": ["macrophage", "monocyte", "T cell", "B cell", "dendritic cell",
-                         "neutrophil", "mast cell", "inflammatory cell", "myeloid cell",
-                         "professional antigen presenting cell"],
-        "Barrier and structural cells": ["epithelial cell", "fibroblast", "mesothelial cell",
-                                         "smooth muscle cell", "endothelial cell", "chondrocyte",
-                                         "stromal cell", "basal cell", "mesenchymal stem cell"],
-        "Secretory cells": ["acinar cell", "goblet cell", "endocrine cell", "plasma cell",
-                            "peptic cell", "epithelial cell of exocrine pancreas",
-                            "thyroid follicular cell", "Sertoli cell"],
-        "Contractile cells": ["ventricular cardiac muscle cell", "cell of skeletal muscle",
-                              "smooth muscle cell"],
+        "Immune cells": ["macrophage", "monocyte", "T cell", "B cell",
+                         "dendritic cell", "neutrophil", "mast cell",
+                         "inflammatory cell", "myeloid cell", "plasma cell",
+                         "professional antigen presenting cell", 
+                         "alternatively activated macrophage"],
+        "Barrier and structural cells": ["epithelial cell",
+                                         "fibroblast",
+                                         "mesothelial cell", 
+                                         "smooth muscle cell",
+                                         "endothelial cell",
+                                         "chondrocyte",
+                                         "stromal cell",
+                                         "basal cell",
+                                         "mesenchymal stem cell"],
+        "Secretory cells": ["acinar cell", "goblet cell", "endocrine cell",
+                            "peptic cell", "Sertoli cell",
+                            "epithelial cell of exocrine pancreas",
+                            "thyroid follicular cell"],
+        "Contractile cells": ["ventricular cardiac muscle cell", 
+                              "cell of skeletal muscle", "smooth muscle cell"],
         "Neural cells": ["neuron", "astrocyte", "oligodendrocyte"]
     }
     colors = {
@@ -134,7 +152,7 @@ def plot_umap(pca, celltype_function_matrix, num_pcs, label_points=True):
     # Assign each column (cell type) to a group, defaulting to "Other"
     celltype_groups = [celltype_to_group.get(celltype, "Other")
                        for celltype in celltype_function_matrix.columns]
-    celltype_colors = [colors[group] for group in celltype_groups]
+    #celltype_colors = [colors[group] for group in celltype_groups]
 
     # Reduce PCA dimensions
     pca_reduced = pca[:, :num_pcs]
