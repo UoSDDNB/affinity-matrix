@@ -107,7 +107,7 @@ def plot_pca(celltype_function_matrix, label_points=True):
     plt.ylabel("PCA 2")
     plt.legend(title="Cell Groups", bbox_to_anchor=(1.05, 1), loc='upper left')
     plt.savefig("output/figures/PCA_function_colored.png", bbox_inches="tight")
-    plt.clf()
+    plt.close()
 
     # Elbow plot
     plt.figure(figsize=(8, 5))
@@ -124,4 +124,4 @@ def plot_pca(celltype_function_matrix, label_points=True):
     plt.xlim(0, x_limit)
     plt.xticks(range(5, len(cumulative_variance) + 1, 5))
     plt.savefig("output/figures/ELBOW_function.png")
-    plt.clf()
+    plt.close()

@@ -22,4 +22,4 @@ def query_celltype_function_matrix(ct_fun):
     mean = ct_fun.var(axis=1).mean()
     plt.axvline(mean, color='red', linestyle='dashed', linewidth=1)
     plt.savefig('/scratch/mtn1n22/affinity-matrix/output/figures/query/celltype_function_matrix/variance_of_each_function.png')
-    plt.clf()
+    plt.close()

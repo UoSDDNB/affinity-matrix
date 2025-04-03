@@ -28,7 +28,7 @@ def query_celltype_gene_matrix(ct_gene):
     plt.ylabel('Frequency')
     plt.tight_layout()
     plt.savefig('/scratch/mtn1n22/affinity-matrix/output/figures/query/celltype_gene_matrix/sum_exp_per_gene.png')
-    plt.clf()
+    plt.close()
 
 
     # Plot the Sum of expression by CellType
@@ -38,7 +38,7 @@ def query_celltype_gene_matrix(ct_gene):
     plt.ylabel('CellType')
     plt.tight_layout()
     plt.savefig('/scratch/mtn1n22/affinity-matrix/output/figures/query/celltype_gene_matrix/sum_exp_per_cell_type.png')
-    plt.clf()
+    plt.close()
 
     # plot a histogram of the variance of each gene (row)
     ct_gene.var(axis=1).sort_values(ascending=True).plot(kind='hist', bins=100, color='purple', alpha=0.7)
@@ -60,10 +60,11 @@ def query_celltype_gene_matrix(ct_gene):
 # # Plot the Sum of expression by CellType again,
 # # this time ordered to match num_genes_expressed_by_ct.sort_values(ascending=False)
 # sum_exp_per_ct = sum_exp_per_ct.loc[num_genes_expressed_by_ct.sort_values(ascending=False).index]
-# sum_exp_per_ct.plot(kind='barh', color='purple', alpha=0.7, figsize=(12, 12))
+# suplt.close()_ct.plot(kind='barh', color='purple', alpha=0.7, figsize=(12, 12))
 # plt.title('Sum of expression by CellType (ordered by number of genes expressed)')
 # plt.xlabel('Sum of expression')
 # plt.ylabel('CellType')
 # plt.tight_layout()
 # plt.savefig('/scratch/mtn1n22/affinity-matrix/output/figures/sum_exp_per_cell_type_ordered.png')
 # plt.clf()
+plt.close()

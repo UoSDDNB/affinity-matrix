@@ -63,7 +63,7 @@ plt.ylabel("PCA 2")
 # save the plot to a file
 plt.savefig("/scratch/mtn1n22/affinity-matrix/output/figures/PCA.png")
 # clear the plot
-plt.clf()
+plt.close()
 
 
 # plot the distance matrix
@@ -86,6 +86,6 @@ plt.ylabel("UMAP 2")
 # save the plot to a file
 plt.savefig("/scratch/mtn1n22/affinity-matrix/output/figures/UMAP.png")
 # clear the plot
-plt.clf()
+plt.close()
 
 

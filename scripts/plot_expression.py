@@ -15,4 +15,4 @@ def plt_gene_exp_hist(celltype_gene_matrix, output_path, xlim=30, ylim=2000, bin
     plt.xlabel("Gene expression")
     plt.ylabel("Frequency")
     plt.savefig(output_path)
-    plt.clf()
+    plt.close()
