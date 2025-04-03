@@ -13,11 +13,11 @@ def build_ct_gene_mat(adata, convert_to_gene_symbols=True):
     """
       
     # Create an empty dataframe
-    celltype_gene_matrix = pd.DataFrame(index=adata.var.index, columns=adata.obs['cell_type'].unique())
+    celltype_gene_matrix = pd.DataFrame(index=adata.var.index, columns=adata.obs['author_cell_type'].unique())
     
-    for celltype in adata.obs['cell_type'].unique():
+    for celltype in adata.obs['author_cell_type'].unique():
         # Subset data to only include the cells of the current cell type
-        cdata = adata[adata.obs['cell_type'] == celltype]
+        cdata = adata[adata.obs['author_cell_type'] == celltype]
         
         # Calculate the average expression of each gene
         avg_expression = cdata.X.mean(axis=0).A1
