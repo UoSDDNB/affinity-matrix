@@ -35,7 +35,7 @@ query_celltype_gene_matrix(ct_gene_mat)
 
 #### remove genes with low variance (e.g. variance < mean)
 #ct_gene_mat = ct_gene_mat[ct_gene_mat.var(axis=1) >= ct_gene_mat.var(axis=1).mean()]
-ct_gene_mat = ct_gene_mat[ct_gene_mat.var(axis=1) >= 0.2]
+#ct_gene_mat = ct_gene_mat[ct_gene_mat.var(axis=1) >= 0.2]
 
 ### PLOT THE GENE EXPRESSION
 # run the plot_expression.py script
@@ -48,7 +48,7 @@ ct_gene_mat = ct_gene_mat[ct_gene_mat.var(axis=1) >= 0.2]
 # consider not binarizing, instead normalizing the data?
 
 ### BINARIZE THE CELLTYPE GENE EXPRESSION MATRIX
-ct_gene_mat_bin = (ct_gene_mat > 0).astype(int)
+ct_gene_mat_bin = (ct_gene_mat > 0.1).astype(int)
 # # save the binarized matrix to a CSV file
 # ct_gene_mat_bin.to_csv('output/celltype_gene_matrix_binarized.csv')
 # # load the binarized celltype-gene matrix as a pd dataframe
@@ -58,7 +58,7 @@ ct_gene_mat_bin = (ct_gene_mat > 0).astype(int)
 query_celltype_gene_matrix_binarized(ct_gene_mat_bin)
 
 ## identify the genes which have a variance below the mean and remove them
-ct_gene_mat_bin = ct_gene_mat_bin[ct_gene_mat_bin.var(axis=1) >= ct_gene_mat_bin.var(axis=1).mean()]
+#ct_gene_mat_bin = ct_gene_mat_bin[ct_gene_mat_bin.var(axis=1) >= ct_gene_mat_bin.var(axis=1).mean()]
 
 ### BUILD THE CELLTYPE FUNCTION MATRIX
 # load the go terms
@@ -78,8 +78,8 @@ query_celltype_function_matrix(ct_fun_mat)
 
 # ## remove functions with low variance
 # # # remove functions with variance less than 4* the mean
-ct_fun_mat = ct_fun_mat[ct_fun_mat.var(axis=1) >= 8 * ct_fun_mat.var(axis=1).mean()]
-ct_fun_mat = ct_fun_mat[ct_fun_mat.var(axis=1) >= 0.0005]
+# ct_fun_mat = ct_fun_mat[ct_fun_mat.var(axis=1) >= 8 * ct_fun_mat.var(axis=1).mean()]
+# ct_fun_mat = ct_fun_mat[ct_fun_mat.var(axis=1) >= 0.0005]
 
 ### PCA
 # run pca on the celltype-function matrix
