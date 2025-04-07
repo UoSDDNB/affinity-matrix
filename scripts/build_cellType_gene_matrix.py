@@ -20,10 +20,12 @@ def build_ct_gene_mat(adata, convert_to_gene_symbols=True):
         cdata = adata[adata.obs['author_cell_type'] == celltype]
         
         # Calculate the average expression of each gene
-        avg_expression = cdata.X.mean(axis=0).A1
+        # avg_expression = cdata.X.mean(axis=0).A1
+        # Instead calculate the Sum of the expression?
+        sum_expression = cdata.X.sum(axis=0).A1
         
         # Store in the celltype-gene matrix
-        celltype_gene_matrix[celltype] = avg_expression
+        celltype_gene_matrix[celltype] = sum_expression
     
     # Convert gene codes to gene symbols
     if not convert_to_gene_symbols:
