@@ -1,4 +1,4 @@
-# imports
+# import necessary libraries
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -8,7 +8,7 @@ from adjustText import adjust_text
 
 def plot_pca(celltype_function_matrix, label_points=True):
     """
-    Perform PCA on celltype_function_matrix and plot PCA projection & elbow plot.
+    Perform PCA on celltype_function_matrix and plot PCA projections & elbow plot.
 
     Args:
         celltype_function_matrix (pd.DataFrame): Input matrix with genes as rows and cell types as columns.
@@ -79,35 +79,41 @@ def plot_pca(celltype_function_matrix, label_points=True):
     # Assign each column (cell type) to a group, defaulting to "Other"
     celltype_groups = [celltype_to_group.get(celltype, "Other")
                        for celltype in celltype_function_matrix.columns]
-    # Ensure all groups have corresponding colors, defaulting to "grey" if missing
-    celltype_colors = [colors.get(group, "grey") for group in celltype_groups]
 
     # Perform PCA
     pca = PCA()
     pca.fit(celltype_function_matrix.T)
     celltype_pca = pca.transform(celltype_function_matrix.T)
 
-    # PCA plot
-    plt.figure(figsize=(10, 10))
-    sns.scatterplot(
-        x=celltype_pca[:, 0], 
-        y=celltype_pca[:, 1], 
-        hue=celltype_groups,
-        palette=colors,  # Now all categories exist in colors
-        alpha=0.7
-    )
+    # Function to create PCA scatter plots
+    def create_pca_plot(x_idx, y_idx, title, filename):
+        plt.figure(figsize=(10, 10))
+        sns.scatterplot(
+            x=celltype_pca[:, x_idx], 
+            y=celltype_pca[:, y_idx], 
+            hue=celltype_groups,
+            palette=colors,
+            alpha=0.7
+        )
+        if label_points:
+            texts = [plt.text(celltype_pca[i, x_idx], celltype_pca[i, y_idx], label, fontsize=8, alpha=0.7)
+                     for i, label in enumerate(celltype_function_matrix.columns)]
+            adjust_text(texts)
+        plt.title(title)
+        plt.xlabel(f"PCA {x_idx + 1}")
+        plt.ylabel(f"PCA {y_idx + 1}")
+        plt.legend(title="Cell Groups", bbox_to_anchor=(1.05, 1), loc='upper left')
+        plt.savefig(filename, bbox_inches="tight")
+        plt.close()
 
-    if label_points:
-        texts = [plt.text(celltype_pca[i, 0], celltype_pca[i, 1], label, fontsize=8, alpha=0.7)
-                 for i, label in enumerate(celltype_function_matrix.columns)]
-        adjust_text(texts)  # Avoid label overlap
+    # Create PCA plots for PC1 vs PC2, PC1 vs PC3, PC3 vs PC4, PC2 vs PC3, and PC1 vs PC4
+    create_pca_plot(0, 1, "PCA Projection (PC1 vs PC2)", "output/figures/PCA_PC1_vs_PC2.png")
+    create_pca_plot(0, 2, "PCA Projection (PC1 vs PC3)", "output/figures/PCA_PC1_vs_PC3.png")
+    create_pca_plot(0, 3, "PCA Projection (PC1 vs PC4)", "output/figures/PCA_PC1_vs_PC4.png")
+    create_pca_plot(1, 2, "PCA Projection (PC2 vs PC3)", "output/figures/PCA_PC2_vs_PC3.png")
+    create_pca_plot(2, 3, "PCA Projection (PC3 vs PC4)", "output/figures/PCA_PC3_vs_PC4.png")
 
-    plt.title("PCA Projection of celltype_function_matrix")
-    plt.xlabel("PCA 1")
-    plt.ylabel("PCA 2")
-    plt.legend(title="Cell Groups", bbox_to_anchor=(1.05, 1), loc='upper left')
-    plt.savefig("output/figures/PCA_function_colored.png", bbox_inches="tight")
-    plt.close()
+
 
     # Elbow plot
     plt.figure(figsize=(8, 5))
@@ -119,7 +125,6 @@ def plot_pca(celltype_function_matrix, label_points=True):
     plt.axhline(y=0.9, color='r', linestyle='--')  # 90% variance threshold
     plt.axhline(y=0.95, color='g', linestyle='--')  # 95% variance threshold
     plt.ylim(0, 1)  # Ensure y-axis starts at 0 and ends at 1
-    # Adjust x-axis limit to cutoff when cumulative variance is 97%, or use total components as fallback
     x_limit = np.argmax(cumulative_variance >= 0.97) + 1 if np.any(cumulative_variance >= 0.97) else len(cumulative_variance)
     plt.xlim(0, x_limit)
     plt.xticks(range(5, len(cumulative_variance) + 1, 5))
