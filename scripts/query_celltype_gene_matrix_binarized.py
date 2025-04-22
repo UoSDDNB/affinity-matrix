@@ -16,9 +16,9 @@ def query_celltype_gene_matrix_binarized(ct_gene_bin):
     """
     # Number of cell types that express each gene
     num_ct_expressing_gene = ct_gene_bin.sum(axis=1)
-    
+
     # Number of genes expressed by each cell type
-    num_genes_expressed_by_ct = ct_gene_bin.sum(axis=0)
+    num_genes_expressed_by_ct = ct_gene_bin.sum(axis=0).sort_values(ascending=False)
 
     # Plot the number of cell types that express each gene
     plt.close()
