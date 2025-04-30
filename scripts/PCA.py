@@ -130,3 +130,28 @@ def plot_pca(celltype_function_matrix, label_points=True):
     plt.xticks(range(5, len(cumulative_variance) + 1, 5))
     plt.savefig("output/figures/ELBOW_function.png")
     plt.close()
+
+    # --- PC1 Loadings Plot ---
+    pc1_loadings = pca.components_[0]
+    feature_names = celltype_function_matrix.index
+    pc1_contributions = list(zip(feature_names, pc1_loadings))
+
+    # Sort and select top positive and negative contributors
+    top_n = 25
+    top_positive = sorted(pc1_contributions, key=lambda x: x[1], reverse=True)[:top_n]
+    top_negative = sorted(pc1_contributions, key=lambda x: x[1])[:top_n]
+    
+    # Combine and flip for plotting (most negative at top)
+    top_features = top_negative[::-1] + top_positive
+    features, loadings = zip(*top_features)
+
+    # Plot
+    plt.figure(figsize=(10, 10))
+    sns.barplot(x=loadings, y=features, palette="coolwarm")
+    plt.axvline(0, color='black', linewidth=0.8)
+    plt.title("Top Contributors to PC1")
+    plt.xlabel("PC1 Loading")
+    plt.ylabel("Feature (Gene or Function)")
+    plt.tight_layout()
+    plt.savefig("output/figures/PC1_loadings.png")
+    plt.close()
